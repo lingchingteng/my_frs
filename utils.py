@@ -3,6 +3,7 @@ import shutil
 
 
 def copy_input_to_database(path_input):
+
     output_folder = "output"
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -15,8 +16,8 @@ def copy_input_to_database(path_input):
 
     if not os.path.exists(path_output_folder):
         os.makedirs(path_output_folder)
-
-    if os.path.exists(os.path.join(path_output_folder, basename)):
+    else:
+        print("Folder %s is already existed." % (path_output_folder))
         return None
 
     shutil.copy2(path_input, path_output_folder)

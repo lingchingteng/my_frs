@@ -2,5 +2,7 @@
 
 venv
 
+*.pyc
+
 output
 input

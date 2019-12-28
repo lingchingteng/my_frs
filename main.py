@@ -38,13 +38,8 @@ def process_image(path_raw_input):
 
     path_input = copy_input_to_database(path_raw_input)
 
-    if not path_input:
-        print("[Warning] "
-              "There is already have same image filename in database (%s)" %
-              (os.path.basename(path_raw_input)))
-        return
-    else:
-        print("[Info] " "Processing (%s)..." % (os.path.basename(path_input)))
+    if path_input:
+        print("[Info] Processing (%s)..." % (os.path.basename(path_input)))
 
         dets = detect_faces_from_path(path_input)
         save_faces(path_input, dets)
