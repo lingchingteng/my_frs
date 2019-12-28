@@ -1,3 +1,4 @@
+import glob
 import os
 from argparse import ArgumentParser
 
@@ -11,13 +12,43 @@ detector = MTCNN()
 
 def main(args):
 
-    path_input = copy_input_to_database(args.path_input)
+    if os.path.isdir(args.path_input):
+        path_images = sorted(
+            glob.glob(os.path.join(args.path_input, "*.[j|J][p|P][g|G]")))
 
-    dets = detect_faces_from_path(path_input)
+        for path_image in path_images:
+            process_image(path_image)
 
-    save_faces(path_input, dets)
+    else:
+        if is_support_file_type(args.path_input):
+            process_image(args.path_input)
 
-    draw_bounding_box_and_save(path_input, dets)
+
+def is_support_file_type(path_image):
+
+    support_file_types = ['.jpg', '.JPG']
+
+    if os.path.splitext(path_image)[1] in support_file_types:
+        return True
+
+    return False
+
+
+def process_image(path_raw_input):
+
+    path_input = copy_input_to_database(path_raw_input)
+
+    if not path_input:
+        print("[Warning] "
+              "There is already have same image filename in database (%s)" %
+              (os.path.basename(path_raw_input)))
+        return
+    else:
+        print("[Info] " "Processing (%s)..." % (os.path.basename(path_input)))
+
+        dets = detect_faces_from_path(path_input)
+        save_faces(path_input, dets)
+        draw_bounding_box_and_save(path_input, dets)
 
 
 def draw_bounding_box_and_save(path_image, dets):
