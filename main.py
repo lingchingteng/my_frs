@@ -84,10 +84,10 @@ def detect_image(img, path_image, save_face=False, save_bbox=False):
     for idx, det in enumerate(dets):
         bbox = det['box']
 
-        cropped_face = img[max(0, bbox[1]):min(img.shape[0] - 1, bbox[1] +
-                                               bbox[3]),
-                           max(0, bbox[0]):min(img.shape[1] - 1, bbox[0] +
-                                               bbox[2])]
+        cropped_face = img[
+            max(0, bbox[1]):min(img.shape[0] - 1, bbox[1] + bbox[3]),
+            max(0, bbox[0]):min(img.shape[1] - 1, bbox[0] + bbox[2])
+        ]  # yapf: disable
         cropped_face = cv2.resize(cropped_face, (160, 160))
 
         det['image_cropped_face'] = cropped_face
