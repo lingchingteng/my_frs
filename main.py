@@ -9,8 +9,6 @@ detector = MTCNN()
 
 
 def copy_input_to_database(path_input):
-
-
     output_folder = "output"
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
