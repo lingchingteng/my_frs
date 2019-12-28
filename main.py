@@ -62,7 +62,10 @@ def detect_video(path_video):
 
             ext = os.path.splitext(path_video)[1]
             path_face = path_video.replace(
-                ext, "frame_%d_face_%d" % (frame_cnt, idx, ) + ".jpg")
+                ext, "frame_%d_face_%d" % (
+                    frame_cnt,
+                    idx,
+                ) + ".jpg")
 
             cv2.imwrite(
                 path_face,
@@ -81,18 +84,17 @@ def detect_image(img, path_image, save_face=False, save_bbox=False):
     for idx, det in enumerate(dets):
         bbox = det['box']
 
-        cropped_face = img[
-            max(0, bbox[1]):min(img.shape[0]-1, bbox[1]+bbox[3]),
-            max(0, bbox[0]):min(img.shape[1]-1, bbox[0]+bbox[2])
-        ]
+        cropped_face = img[max(0, bbox[1]):min(img.shape[0] - 1, bbox[1] +
+                                               bbox[3]),
+                           max(0, bbox[0]):min(img.shape[1] - 1, bbox[0] +
+                                               bbox[2])]
         cropped_face = cv2.resize(cropped_face, (160, 160))
 
         det['image_cropped_face'] = cropped_face
 
         if path_image and save_face:
             ext = os.path.splitext(path_image)[1]
-            path_face = path_image.replace(
-                ext, "_face_%d" % (idx, ) + ext)
+            path_face = path_image.replace(ext, "_face_%d" % (idx, ) + ext)
 
             det['path_cropped_face'] = path_face
 
@@ -101,14 +103,12 @@ def detect_image(img, path_image, save_face=False, save_bbox=False):
         if path_image and save_bbox:
             line_width = min(
                 int(min(img.shape[0:2]) * 0.01),  # Basic width, img too big
-                int(min(det['box'][2], det['box'][3])*0.08),  # face too big
+                int(min(det['box'][2], det['box'][3]) * 0.08),  # face too big
             )
             cv2.rectangle(
-                bbox_img,
-                (det['box'][0], det['box'][1]),
+                bbox_img, (det['box'][0], det['box'][1]),
                 (det['box'][0] + det['box'][2], det['box'][1] + det['box'][3]),
-                (255, 0, 0),
-                line_width)
+                (255, 0, 0), line_width)
 
     if path_image and save_bbox:
         filename, ext = os.path.splitext(path_image)
