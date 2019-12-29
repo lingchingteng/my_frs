@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 import cv2
 from mtcnn.mtcnn import MTCNN
 
-from utils import copy_input_to_database
+from utils import copy_input_to_database, is_support_file_type
 
 detector = MTCNN()
 
@@ -13,8 +13,7 @@ detector = MTCNN()
 def main(args):
 
     if os.path.isdir(args.path_input):
-        path_images = sorted(
-            glob.glob(os.path.join(args.path_input, "*.[j|J][p|P][g|G]")))
+        path_images = sorted(glob.glob(os.path.join(args.path_input, "*")))
 
         for path_image in path_images:
             process_image(path_image)
@@ -22,16 +21,6 @@ def main(args):
     else:
         if is_support_file_type(args.path_input):
             process_image(args.path_input)
-
-
-def is_support_file_type(path_image):
-
-    support_file_types = ['.jpg', '.JPG']
-
-    if os.path.splitext(path_image)[1] in support_file_types:
-        return True
-
-    return False
 
 
 def process_image(path_raw_input):
@@ -42,11 +31,11 @@ def process_image(path_raw_input):
         print("[Info] Processing (%s)..." % (os.path.basename(path_input)))
 
         dets = detect_faces_from_path(path_input)
-        save_faces(path_input, dets)
-        draw_bounding_box_and_save(path_input, dets)
+        save_cropped_faces(path_input, dets)
+        save_image_with_bbox(path_input, dets)
 
 
-def draw_bounding_box_and_save(path_image, dets):
+def save_image_with_bbox(path_image, dets):
 
     img = cv2.imread(path_image)
 
@@ -68,7 +57,7 @@ def draw_bounding_box_and_save(path_image, dets):
     cv2.imwrite(path_bbox_image, img)
 
 
-def save_faces(path_image, dets):
+def save_cropped_faces(path_image, dets):
 
     img = cv2.imread(path_image)
 

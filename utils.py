@@ -1,5 +1,6 @@
 import os
 import shutil
+import re
 
 
 def copy_input_to_database(path_input):
@@ -25,3 +26,14 @@ def copy_input_to_database(path_input):
     path_input = os.path.join(path_output_folder, basename)
 
     return path_input
+
+
+def is_support_file_type(path_image):
+
+    re_support_file_types = ".(png|jpe?g)"
+
+    if re.match(re_support_file_types,
+                os.path.splitext(path_image)[1].lower()):
+        return True
+
+    return False
