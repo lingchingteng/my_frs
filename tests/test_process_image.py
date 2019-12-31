@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from main import process_image
+from mtcnn_detect_faces import process_image
 
 
 def test_process_image():
