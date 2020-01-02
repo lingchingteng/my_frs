@@ -2,7 +2,13 @@
 
 venv
 
-*.pyc
+__pycache__/
 
 output
 input
+
+.coverage
+
+tmp
+
+.pytest_cache
