@@ -11,10 +11,10 @@ pip install -r requirements.txt
 ## Usage:
 
 ### for all images in a folder
-python main.py [path_folder]
+python mtcnn_detect_faces.py [path_folder]
 
 ### for only one image
-python main.py [path_image]
+python mtcnn_detect_faces.py [path_image]
 
 ## Introduction
 
