@@ -18,7 +18,7 @@ PyYAML
 scipy
 six
 tensorboard
-tensorflow
+tensorflow==2.4.0
 tensorflow-estimator
 termcolor
 Werkzeug
